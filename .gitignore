@@ -31,3 +31,7 @@
 *.out
 *.app
 *.Abs
+
+# Other stuff
+*.css
+*.html

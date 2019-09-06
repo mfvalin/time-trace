@@ -13,6 +13,7 @@
 //  Lesser General Public License for more details.
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <sys/time.h>
 #include <sys/types.h>
@@ -23,7 +24,7 @@
 #include <time_trace.h>
 #undef NEED_PRIVATE
 
-long long WallClockTime(){           // get current time of day in microseconds
+uint64_t WallClockTime(){           // get current time of day in microseconds
   struct timeval tv;
   long long time;
   gettimeofday(&tv, NULL);
@@ -32,6 +33,27 @@ long long WallClockTime(){           // get current time of day in microseconds
   time += tv.tv_usec;               // add microseconds part
   return time;
 }
+
+static uint64_t current_cpu_clock = 0;
+
+uint64_t CpuClockCycles(void) {   // version with serialization
+#if defined(__x86_64__)
+  uint32_t lo, hi;
+  __asm__ volatile ("rdtscp"
+      : /* outputs   */ "=a" (lo), "=d" (hi)
+      : /* no inputs */
+      : /* clobbers  */ "%rcx");
+  return current_cpu_clock = (uint64_t)lo | (((uint64_t)hi) << 32) ;
+#else
+#if defined(__aarch64__)
+  asm volatile ("isb; mrs %0, cntvct_el0" : "=r" (current_cpu_clock));
+  return current_cpu_clock;
+#else
+  return current_cpu_clock++;
+#endif
+#endif
+}
+
 
 // tp : pointer to a time context structure
 void TimeTraceInit(time_context *tp){  // create initialized time context
