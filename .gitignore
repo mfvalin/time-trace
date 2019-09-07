@@ -33,5 +33,5 @@
 *.Abs
 
 # Other stuff
-*.css
-*.html
+#*.css
+#*.html
