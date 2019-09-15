@@ -272,6 +272,7 @@ void TimeTraceDumpText(time_context t, char *filename, int ordinal){  // dump in
     }else{
       fprintf(fd,"%d %d ",cstep, tag);
       for(j=0 ; j<nval ; j++) fprintf(fd,"%llu ",tm[j]);
+      if(nval == 1) fprintf(fd,"0"); // always 2 values for now (nval is either 1 or 2)
     }
     fprintf(fd,"\n");
   }
