@@ -28,8 +28,9 @@ time_trace_f.o: time_trace_f.F90 time_trace.h time_trace.hf
 lib:	$(OBJECTS)
 	ar rcv $(LIB) $(OBJECTS)
 
-trace_test_f_mpi:
-	$(MPIFCOMP) $(FFLAGS) -DSELF_TEST time_trace.F90 -o $@
+trace_test_f_mpi.Abs:
+	$(CCOMP) $(CFLAGS) -I. -c -DSELF_TEST time_trace_c.c
+	$(MPIFCOMP) $(FFLAGS) -I. -DSELF_TEST time_trace_f.F90 time_trace_c.o -o $@
 
 trace_test_f.Abs: time_trace_c.c time_trace_f.F90 time_trace.h time_trace.hf
 	$(CCOMP) $(CFLAGS) -I. -c -DSELF_TEST time_trace_c.c
