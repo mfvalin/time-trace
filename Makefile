@@ -7,9 +7,9 @@ FCOMP = gfortran
 
 MPIFCOMP = mpif90
 
-FFLAGS = 
+FFLAGS = -O2
 
-CFLAGS =
+CFLAGS = -O2
 
 OBJECTS =  time_trace_c.o time_trace_f.o
 
@@ -17,7 +17,7 @@ LIB = libtimetrace.a
 
 all:	lib tests
 
-tests: trace_test_f.Abs trace_test_c.Abs
+tests: lib trace_test_f.Abs trace_test_c.Abs
 
 time_trace_c.o: time_trace_c.c time_trace.h
 	$(CCOMP) $(CFLAGS) -I. -c time_trace_c.c

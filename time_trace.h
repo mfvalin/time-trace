@@ -129,13 +129,11 @@ type, BIND(C) :: time_context   !  wrappper to give a type to a C pointer
   type(C_PTR) :: t              ! actual pointer to internal trace table
 end type
 !****
-#if defined(NEED_PRIVATE)
 
 type, bind(C) :: timeval        !  interface to structure returned by get_time_of_day
   integer(C_LONG_LONG) :: sec   !  seconds for an arbitrary time in the past
   integer(C_LONG_LONG) :: usec  !  microseconds (added to sec)
 end type
-#endif
 
 #else
 //****T* libtimetrace/user defined types  (C version) 
