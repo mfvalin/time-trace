@@ -131,10 +131,10 @@ end type
 !****
 #if defined(NEED_PRIVATE)
 
-!type, bind(C) :: timeval        !  interface to structure returned by get_time_of_day
-!  integer(C_LONG_LONG) :: sec   !  seconds for an arbitrary time in the past
-!  integer(C_LONG_LONG) :: usec  !  microseconds (added to sec)
-!end type
+type, bind(C) :: timeval        !  interface to structure returned by get_time_of_day
+  integer(C_LONG_LONG) :: sec   !  seconds for an arbitrary time in the past
+  integer(C_LONG_LONG) :: usec  !  microseconds (added to sec)
+end type
 #endif
 
 #else
